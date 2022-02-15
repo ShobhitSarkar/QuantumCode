@@ -1,0 +1,110 @@
+import qutip 
+from qutip import *
+import matplotlib.pyplot as plt 
+import numpy as np 
+from IPython.display import Image
+
+# %%
+q = Qobj([[1],[0]])
+q
+
+# %%
+#function to find the dimensions, composite Hilbert state space
+q.dims
+
+# %%
+#shape of matrix data representation
+q.shape
+
+# %%
+#full dense matrix representaiton 
+q.full()
+
+# %%
+#Pauli operator - sigma y
+sy = Qobj([[0,-1j],[1j,0]])
+sy
+
+# %%
+#Pauli operator - sigma z 
+sz = Qobj([[1,0],[0,-1]])
+sz
+
+# %%
+H = 1.*sz*0.1*sy
+print(H)
+
+# %%
+#Hermitian conjugate
+H.dag()
+
+# %%
+H.tr()
+#Finds the trace of the hamiltonian 
+
+# %%
+#Finds the eighen energies 
+H.eigenenergies()
+
+# %%
+#fundamental basis states 
+N = 2
+n = 1 
+basis(N,n)
+
+# %%
+fock(4,2)
+
+# %%
+#Coherent statees 
+coherent(N = 10, alpha = 1.0)
+
+# %%
+#pauli sigma x 
+print(sigmax())
+
+#pauli sigma y 
+print(sigmay())
+
+#pauli sigma z 
+
+print(sigmaz())
+
+# %%
+s1 = tensor(sigmaz(), qeye(2))
+print(s1)
+
+# %%
+q1 = tensor(basis(N,1),basis(N,0)) #First exciteed qubit
+q2 = tensor(basis(N,0),basis(N,1)) #Second excited qubit
+
+# %%
+s1*q1 == q1
+#Should return false because q1 should flip the sign of 
+#the excited state of q1
+
+# %%
+s1*q2 == q2
+#Should return true because q1 should leave q2 unaffected
+
+# %%
+x = qeye(5)
+#Generated identity operator with 5 quantum states
+print(x)
+
+# %%
+tensor(sigmax(), sigmay())
+
+# %%
+#Code to create a 2 qubit hamiltonian 
+epsilon = [1.0,1.0]
+g = 0.1
+
+sz1 = tensor(sigmaz(), qeye(2))
+sz2 = tensor(qeye(2),sigmaz())
+
+H = epsilon[0]*sz1 + epsilon[1]*sz2 +g*tensor(sigmax(),sigmax())
+print(H)
+
+#To create composite systems, change operators that are passed
+#into tensor type
